@@ -1,4 +1,4 @@
-package com.geekcap.javaworld;
+package com.anderscore;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
