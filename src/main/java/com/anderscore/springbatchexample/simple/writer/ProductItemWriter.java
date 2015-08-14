@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * Writes products to a database
+ * Schreibt ein Produkt in die DB
  */
 public class ProductItemWriter implements ItemWriter<Product>
 {
@@ -28,6 +28,7 @@ public class ProductItemWriter implements ItemWriter<Product>
     {
         for( Product product : products )
         {
+        	// Für jedes Produkt eine SELECT query machen um festzustellen ob es dieses schon in der DB gibt 
             List<Product> productList = jdbcTemplate.query(GET_PRODUCT, new Object[] {product.getId()}, new RowMapper<Product>() {
                 @Override
                 public Product mapRow( ResultSet resultSet, int rowNum ) throws SQLException {
@@ -40,6 +41,7 @@ public class ProductItemWriter implements ItemWriter<Product>
                 }
             });
 
+            // Wenn es das Produkt schon gibt --> UPDATE, ansonsten INSERT
             if( productList.size() > 0 )
             {
                 jdbcTemplate.update( UPDATE_PRODUCT, product.getName(), product.getDescription(), product.getQuantity(), product.getId() );

@@ -23,7 +23,7 @@ public class ProductItemProcessor implements ItemProcessor<Product,Product>
     @Override
     public Product process(Product product) throws Exception
     {
-        // Retrieve the product from the database
+        // Produkt aus der DB lesen
         List<Product> productList = jdbcTemplate.query(GET_PRODUCT, new Object[] {product.getId()}, new RowMapper<Product>() {
             @Override
             public Product mapRow( ResultSet resultSet, int rowNum ) throws SQLException {
@@ -38,12 +38,16 @@ public class ProductItemProcessor implements ItemProcessor<Product,Product>
 
         if( productList.size() > 0 )
         {
-            // Add the new quantity to the existing quantity
+            // Füge die neue 'Quantity' zur vorhandenen 'Quantity' hinzu
             Product existingProduct = productList.get( 0 );
             product.setQuantity( existingProduct.getQuantity() + product.getQuantity() );
         }
+        
+        // optional: Filter Produkte mit einer bestimmten ID
+//        if(product.getId() == 8) 
+//        	return null;
 
-        // Return the (possibly) update prduct
+        // (Möglicherweise aktualisiertes) Produkt zurückgeben
         return product;
     }
 }

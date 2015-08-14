@@ -7,7 +7,7 @@ import org.springframework.batch.item.file.transform.FieldSet;
 import org.springframework.validation.BindException;
 
 /**
- * Builds a Product from a row in the CSV file (as a set of fields)
+ * Baut ein Produkt basierend auf einer Zeile aus der CSV Datei  (als ein Set von Feldern)
  */
 public class ProductFieldSetMapper implements FieldSetMapper<Product>
 {

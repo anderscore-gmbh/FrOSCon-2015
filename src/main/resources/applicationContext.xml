@@ -33,14 +33,12 @@
     </bean>
 
     <!-- create job-meta tables automatically -->
-    <!--
+    
     <jdbc:initialize-database data-source="dataSource">
         <jdbc:script location="org/springframework/batch/core/schema-drop-mysql.sql" />
         <jdbc:script location="org/springframework/batch/core/schema-mysql.sql" />
     </jdbc:initialize-database>
-    -->
-
-
+   
 
     <!-- Job Repository: used to persist the state of the batch job -->
     <bean id="jobRepository" class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
@@ -48,13 +46,10 @@
     </bean>
 
 
-
     <!-- Job Launcher: creates the job and the job state before launching it -->
     <bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
         <property name="jobRepository" ref="jobRepository" />
     </bean>
-
-
 
 
     <!-- Reader bean for our simple CSV example -->
@@ -90,10 +85,38 @@
 
     <bean id="productWriter" class="com.anderscore.springbatchexample.simple.writer.ProductItemWriter" />
 
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+    <!-- Beans für Verabeitung und Archivierung -->
     <bean id="productProcessor" class="com.anderscore.springbatchexample.simple.processor.ProductItemProcessor" />
 
     <bean id="archiveFileTasklet" class="com.anderscore.springbatchexample.simple.tasklet.ArchiveProductImportFileTasklet" scope="step">
         <property name="inputFile" value="#{jobParameters['inputFile']}" />
     </bean>
+    
+    <!-- CompositeItemProcessor (Fasst einen neuen FilterProcessor und den schon bekannten ProductProzessor zusammen) -->
+    <bean id="productProcessor2" class="com.anderscore.springbatchexample.simple.processor.ProductItemProcessor2" />
+    <bean id="productProcessor3" class="com.anderscore.springbatchexample.simple.processor.ProductItemProcessor3" />
 
+	<bean id="productCompositeProcessor" class="org.springframework.batch.item.support.CompositeItemProcessor">
+		<property name="delegates">
+			<list>
+				<ref bean="productProcessor" />
+				<ref bean="productProcessor2" />
+				<ref bean="productProcessor3" />
+			</list>
+		</property>
+	</bean>
 </beans>

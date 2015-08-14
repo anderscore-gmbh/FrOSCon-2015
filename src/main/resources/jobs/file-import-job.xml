@@ -11,15 +11,29 @@
     <!-- Import our beans -->
     <import resource="classpath:/applicationContext.xml" />
 
+	<!-- job ohne processor -->
+    <!-- <job id="simpleFileImportJob" xmlns="http://www.springframework.org/schema/batch">
+        <step id="importFileStep">
+            <tasklet>
+                <chunk reader="productReader" writer="productWriter" commit-interval="5" />
+            </tasklet>
+        </step>
+    </job> -->
+    
+    <!-- job with processor and archiveFileStep -->
     <job id="simpleFileImportJob" xmlns="http://www.springframework.org/schema/batch">
         <step id="importFileStep" next="archiveFileStep">
             <tasklet>
-                <chunk reader="productReader" processor="productProcessor" writer="productWriter" commit-interval="5" />
+                <chunk reader="productReader" processor="productCompositeProcessor" writer="productWriter" commit-interval="5" />
             </tasklet>
         </step>
         <step id="archiveFileStep">
             <tasklet ref="archiveFileTasklet" />
         </step>
     </job>
-
 </beans>
+
+
+
+<!-- Optional: im obigen Job den chunk mit compositeProcessor konfigurieren: -->
+<!-- <chunk reader="productReader" processor="productCompositeProcessor" writer="productWriter" commit-interval="5" /> -->
