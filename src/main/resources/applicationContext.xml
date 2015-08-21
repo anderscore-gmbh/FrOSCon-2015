@@ -102,11 +102,7 @@
     <!-- Beans für Verabeitung und Archivierung -->
     <bean id="productProcessor" class="com.anderscore.springbatchexample.simple.processor.ProductItemProcessor" />
 
-    <bean id="archiveFileTasklet" class="com.anderscore.springbatchexample.simple.tasklet.ArchiveProductImportFileTasklet" scope="step">
-        <property name="inputFile" value="#{jobParameters['inputFile']}" />
-    </bean>
-    
-    <!-- CompositeItemProcessor (Fasst einen neuen FilterProcessor und den schon bekannten ProductProzessor zusammen) -->
+    <!-- CompositeItemProcessor (Fasst 2 neue FilterProcessoren und den schon bekannten ProductProzessor zusammen) -->
     <bean id="productProcessor2" class="com.anderscore.springbatchexample.simple.processor.ProductItemProcessor2" />
     <bean id="productProcessor3" class="com.anderscore.springbatchexample.simple.processor.ProductItemProcessor3" />
 
@@ -119,4 +115,9 @@
 			</list>
 		</property>
 	</bean>
+	
+	<!-- Tasklet Implementierung -->
+    <bean id="archiveFileTasklet" class="com.anderscore.springbatchexample.simple.tasklet.ArchiveProductImportFileTasklet" scope="step">
+        <property name="inputFile" value="#{jobParameters['inputFile']}" />
+    </bean>
 </beans>
