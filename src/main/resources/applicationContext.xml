@@ -105,6 +105,10 @@
         <property name="inputFile" value="#{jobParameters['inputFile']}" />
     </bean>
     
+    <!-- Listeners -->
+    <bean id="customStepListener" class="com.anderscore.springbatchexample.simple.listener.CustomStepListener" />
+    <bean id="customReadListener" class="com.anderscore.springbatchexample.simple.listener.CustomReadListener" />
+    
     <!-- create job-meta tables automatically -->
     <!--   <jdbc:initialize-database data-source="dataSource">
         <jdbc:script location="org/springframework/batch/core/schema-drop-mysql.sql" />

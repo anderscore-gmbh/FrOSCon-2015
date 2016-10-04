@@ -17,6 +17,11 @@
             <tasklet>
                 <chunk reader="productReader" processor="productProcessor" writer="productWriter" commit-interval="5"/> 
             </tasklet>
+            <!-- Optional: Define Listeners -->
+            <!-- <listeners>
+        		<listener ref="customStepListener"/>
+        		<listener ref="customReadListener"/>
+    		</listeners> -->
         </step>
         <step id="archiveFileStep">
             <tasklet ref="archiveFileTasklet" />
