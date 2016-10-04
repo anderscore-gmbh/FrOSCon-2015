@@ -4,6 +4,8 @@
 # and then execute the following command
 # on Windows:
 java -cp spring-batch-example.jar;./lib/* org.springframework.batch.core.launch.support.CommandLineJobRunner classpath:/jobs/file-import-job.xml simpleFileImportJob inputFile=classes/input/sample.csv
+oder mit executeDate parameter zur Unterscheidung von Job-Instanzen:
+java -cp spring-batch-example.jar;./lib/* org.springframework.batch.core.launch.support.CommandLineJobRunner classpath:/jobs/file-import-job.xml simpleFileImportJob inputFile=classes/input/sample.csv executeDate=%DATE%-%TIME%
 
 # On Unix/Linux:
 java -cp spring-batch-example.jar:./lib/* org.springframework.batch.core.launch.support.CommandLineJobRunner classpath:/jobs/file-import-job.xml simpleFileImportJob inputFile=classes/input/sample.csv

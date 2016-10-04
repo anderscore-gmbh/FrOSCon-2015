@@ -42,10 +42,6 @@ public class ProductItemProcessor implements ItemProcessor<Product,Product>
             Product existingProduct = productList.get( 0 );
             product.setQuantity( existingProduct.getQuantity() + product.getQuantity() );
         }
-        
-        // optional: Filter Produkte mit einer bestimmten ID
-//        if(product.getId() == 8) 
-//        	return null;
 
         // (Möglicherweise aktualisiertes) Produkt zurückgeben
         return product;

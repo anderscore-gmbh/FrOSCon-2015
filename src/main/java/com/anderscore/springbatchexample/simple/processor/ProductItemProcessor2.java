@@ -19,6 +19,11 @@ public class ProductItemProcessor2 implements ItemProcessor<Product,Product>
         // Hinzufügen einer besonderen Beschreibung zu Produkten mit einer bestimmten ID
         if(product.getId() == 8) {
         	product.setDescription("Processor2 sagt Hallo!");
+        	System.out.println("Produkt 8 description changed.");
+        }
+        if(product.getId() == 5) {
+        	product.setDescription("Product 5 processed");
+        	System.out.println("Product 5 processed");
         }   
         return product;
     }

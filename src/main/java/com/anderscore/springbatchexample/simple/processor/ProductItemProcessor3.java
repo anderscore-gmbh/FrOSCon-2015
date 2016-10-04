@@ -19,7 +19,7 @@ public class ProductItemProcessor3 implements ItemProcessor<Product,Product>
         // Filtern eines Eintrags mit einer bestimmten ID
         if(product.getId() == 5) {
         	return null;
-        }   
+        }
         return product;
     }
 }

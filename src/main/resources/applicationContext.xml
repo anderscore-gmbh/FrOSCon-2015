@@ -32,18 +32,16 @@
         <property name="dataSource" ref="dataSource" />
     </bean>
 
-    <!-- create job-meta tables automatically -->
-    
-    <jdbc:initialize-database data-source="dataSource">
-        <jdbc:script location="org/springframework/batch/core/schema-drop-mysql.sql" />
-        <jdbc:script location="org/springframework/batch/core/schema-mysql.sql" />
-    </jdbc:initialize-database>
-   
-
     <!-- Job Repository: used to persist the state of the batch job -->
-    <bean id="jobRepository" class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
+   <batch:job-repository id="jobRepository"
+   		data-source="dataSource"
+    	transaction-manager="transactionManager"
+    />
+    
+    <!-- In-Memory Job Repository -->
+    <!-- <bean id="jobRepository" class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
         <property name="transactionManager" ref="transactionManager" />
-    </bean>
+    </bean> -->
 
 
     <!-- Job Launcher: creates the job and the job state before launching it -->
@@ -85,20 +83,6 @@
 
     <bean id="productWriter" class="com.anderscore.springbatchexample.simple.writer.ProductItemWriter" />
 
-
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-
     <!-- Beans für Verabeitung und Archivierung -->
     <bean id="productProcessor" class="com.anderscore.springbatchexample.simple.processor.ProductItemProcessor" />
 
@@ -120,4 +104,10 @@
     <bean id="archiveFileTasklet" class="com.anderscore.springbatchexample.simple.tasklet.ArchiveProductImportFileTasklet" scope="step">
         <property name="inputFile" value="#{jobParameters['inputFile']}" />
     </bean>
+    
+    <!-- create job-meta tables automatically -->
+    <!--   <jdbc:initialize-database data-source="dataSource">
+        <jdbc:script location="org/springframework/batch/core/schema-drop-mysql.sql" />
+        <jdbc:script location="org/springframework/batch/core/schema-mysql.sql" />
+    </jdbc:initialize-database> -->
 </beans>

@@ -22,6 +22,8 @@ public class ArchiveProductImportFileTasklet implements Tasklet
         File archiveDir = new File( "archive" );
         FileUtils.forceMkdir( archiveDir );
         FileUtils.copyFileToDirectory( new File( inputFile ), archiveDir );
+        
+        System.out.println("successfully archived file \"" + inputFile + "\"");
 
         // We're done...
         return RepeatStatus.FINISHED;

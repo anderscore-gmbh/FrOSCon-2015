@@ -10,49 +10,47 @@
 
     <!-- Import our beans -->
     <import resource="classpath:/applicationContext.xml" />
-
-	<!-- job ohne processor -->
-    <job id="simpleFileImportJob" xmlns="http://www.springframework.org/schema/batch">
-        <step id="importFileStep">
+    
+    <!-- job with processor and archiveFileStep -->
+   <job id="simpleFileImportJob" xmlns="http://www.springframework.org/schema/batch">
+        <step id="processFileStep" next="archiveFileStep">
             <tasklet>
-                <chunk reader="productReader" writer="productWriter" commit-interval="5" />
+                <chunk reader="productReader" processor="productProcessor" writer="productWriter" commit-interval="5"/> 
             </tasklet>
         </step>
+        <step id="archiveFileStep">
+            <tasklet ref="archiveFileTasklet" />
+        </step>
     </job>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-   <!-- job with processor and archiveFileStep -->
+</beans>
+
+<!-- Optional: im obigen Job den chunk mit compositeProcessor konfigurieren: -->
+<!-- <chunk reader="productReader" processor="productCompositeProcessor" writer="productWriter" commit-interval="5" /> -->
+
+
+<!-- job ohne processor -->
    <!--  <job id="simpleFileImportJob" xmlns="http://www.springframework.org/schema/batch">
-        <step id="importFileStep" next="archiveFileStep">
+	        <step id="importFileStep">
+	            <tasklet>
+	                <chunk reader="productReader" writer="productWriter" commit-interval="5" />
+	            </tasklet>
+	        </step>
+		</job> -->
+		
+  <!-- job mit Resiliency -->
+  <!--  <job id="simpleFileImportJob" xmlns="http://www.springframework.org/schema/batch">
+        <step id="processFileStep" next="archiveFileStep">
             <tasklet>
-                <chunk reader="productReader" processor="productProcessor" writer="productWriter" commit-interval="5" />
+                <chunk reader="productReader" processor="productCompositeProcessor" writer="productWriter" commit-interval="5" skip-limit="2">
+                                         <skippable-exception-classes>
+                                 			<include class="org.springframework.batch.item.file.FlatFileParseException" /> 
+                         				</skippable-exception-classes>
+                </chunk>
+                
+                
             </tasklet>
         </step>
         <step id="archiveFileStep">
             <tasklet ref="archiveFileTasklet" />
         </step>
     </job> -->
-</beans>
-
-<!-- Optional: im obigen Job den chunk mit compositeProcessor konfigurieren: -->
-<!-- <chunk reader="productReader" processor="productCompositeProcessor" writer="productWriter" commit-interval="5" /> -->
