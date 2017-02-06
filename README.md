@@ -1,3 +1,2 @@
-#anderScore FrOSCon 2015 repository
-
-This repository is used to store source code related to the talks held by anderScore at FrOSCon 2015. Each speaker has to create his/her own branch.
+# anderScore FrOSCon 2015 repository
+This branch contains all contents related to the talk 'Java Concurrency' held by Arno Haase at FrOSCon 2015.
